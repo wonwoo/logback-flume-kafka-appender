@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<configuration>
+    <appender name="console" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+            <pattern>
+                %d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n
+            </pattern>
+        </encoder>
+    </appender>
+
+    <appender name="flume" class="me.wonwoo.appender.FlumeKafkaAppender">
+        <sinkName>kafkaSink</sinkName>
+        <channelName>kafkaChannel</channelName>
+        <mode>INFO</mode>
+        <channelAttr>
+            <capacity>100000</capacity>
+            <transactionCapacity>1000</transactionCapacity>
+            <dataDirs>/Users/wonwoo/Desktop/flume</dataDirs>
+            <checkpointDir>/Users/wonwoo/Desktop/flume/checkout</checkpointDir>
+        </channelAttr>
+        <KafkaAttr>
+            <topic>test</topic>
+            <brokerList>localhost:9092</brokerList>
+            <!--<brokerList>localhost:9092,localhost:9093,localhost:9094</brokerList>-->
+            <batchSize>100</batchSize>
+        </KafkaAttr>
+        <!--<encoder class="me.wonwoo.encoding.DefaultFlumeMessageEncoder">-->
+            <!--<layout class="ch.qos.logback.classic.PatternLayout">-->
+                <!--<pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg</pattern>-->
+            <!--</layout>-->
+        <!--</encoder>-->
+
+        <encoder class="me.wonwoo.encoding.DefaultFlumeMessageEncoder">
+            <layout class="me.wonwoo.layout.JsonLayout">
+                <jsonFormatter class="me.wonwoo.layout.JacksonJsonFormatter">
+                    <prettyPrint>true</prettyPrint>
+                </jsonFormatter>
+            </layout>
+        </encoder>
+
+    </appender>
+    <root level="INFO">
+        <appender-ref ref="flume" />
+        <appender-ref ref="console" />
+    </root>
+</configuration>
