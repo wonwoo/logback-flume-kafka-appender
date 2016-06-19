@@ -83,11 +83,12 @@ kakfa consumer
     </layout>
 </encoder>
 ```
-incloude list 
+incloude list : 
 includeLevel, includeThreadName, includeMDC, includeLoggerName, includeFormattedMessage, includeMessage ,includeException, includeContextName, includeHostName, includeLineNumber
 
 kakfa consumer 
-```
+
+```json
 {
   "timestamp" : "1466337714117",
   "level" : "ERROR",
@@ -102,6 +103,44 @@ kakfa consumer
 }
 ```
 
+### TEST
+
+```java
+@Test
+public void appenderKafkaTest() {
+  logger.info("kafka1 sink test");
+}
+
+@Test
+public void appenderKafkaError() {
+  try {
+    URL uri = new URL("urltest");
+    uri.openConnection();
+  } catch (MalformedURLException e) {
+    logger.error("url formed exception ", e);
+  } catch (IOException e) {
+    logger.error("error {} : ", e.toString());
+  }
+}
+```
+
+### maven
+
+```xml
+<repositories>
+	<repository>
+	    <id>spring-boot-gcm-mvn-repo</id>
+	    <url>https://raw.github.com/wonwoo/logback-flume-kafka-appender/mvn-repo/</url>
+	</repository>
+</repositories>
+
+
+<dependency>
+  <groupId>me.wonwoo</groupId>
+  <artifactId>logback-flume-kafka-appender</artifactId>
+  <version>0.9.0-SNAPSHOT</version>
+</dependency>
+```
 
 
 
