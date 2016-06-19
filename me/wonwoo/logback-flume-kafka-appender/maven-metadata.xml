@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<metadata>
+  <groupId>me.wonwoo</groupId>
+  <artifactId>logback-flume-kafka-appender</artifactId>
+  <versioning>
+    <versions>
+      <version>0.9.0-SNAPSHOT</version>
+    </versions>
+    <lastUpdated>20160619122700</lastUpdated>
+  </versioning>
+</metadata>
