@@ -32,12 +32,12 @@
         </encoder>
 
         <!--<encoder class="me.wonwoo.encoding.DefaultFlumeMessageEncoder">-->
-        <!--<layout class="me.wonwoo.layout.JsonLayout">-->
-        <!--<jsonFormatter class="me.wonwoo.layout.JacksonJsonFormatter">-->
-        <!--<prettyPrint>true</prettyPrint>-->
-        <!--</jsonFormatter>-->
-        <!--<includeContextName>false</includeContextName>-->
-        <!--</layout>-->
+            <!--<layout class="me.wonwoo.layout.JsonLayout">-->
+                <!--<jsonFormatter class="me.wonwoo.layout.JacksonJsonFormatter">-->
+                    <!--<prettyPrint>true</prettyPrint>-->
+                <!--</jsonFormatter>-->
+                <!--<includeContextName>false</includeContextName>-->
+            <!--</layout>-->
         <!--</encoder>-->
 
     </appender>

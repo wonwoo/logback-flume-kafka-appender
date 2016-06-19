@@ -38,8 +38,8 @@ public class JsonLayout extends JsonLayoutBase<ILoggingEvent> {
   public static final String MESSAGE_ATTR_NAME = "raw-message";
   public static final String EXCEPTION_ATTR_NAME = "exception";
   public static final String CONTEXT_ATTR_NAME = "context";
-  public static final String LINE_NUMBER = "lineNumber";
-  public static final String HOST_NAME = "hostName";
+  public static final String LINE_ATTR_NUMBER = "lineNumber";
+  public static final String HOST_ATTR_NAME = "hostName";
 
   protected boolean includeLevel;
   protected boolean includeThreadName;
@@ -151,7 +151,7 @@ public class JsonLayout extends JsonLayoutBase<ILoggingEvent> {
 
     if (this.includeLineNumber) {
       String number = lineNumber(event);
-      map.put(LINE_NUMBER, number);
+      map.put(LINE_ATTR_NUMBER, number);
     }
 
     if (this.includeHostName) {
@@ -159,7 +159,7 @@ public class JsonLayout extends JsonLayoutBase<ILoggingEvent> {
         if(this.hostName == null){
           this.hostName = InetAddress.getLocalHost().getHostName();
         }
-        map.put(HOST_NAME, this.hostName);
+        map.put(HOST_ATTR_NAME, this.hostName);
       } catch (UnknownHostException ignored) {
       }
     }
