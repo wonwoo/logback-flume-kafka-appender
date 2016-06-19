@@ -161,7 +161,7 @@ public void appenderKafkaError() {
 </dependency>
 ```
 
-reference : [wonwoo blog](httphttp://wonwoo.ml/index.php/post/951 "wonwoo blog")
+reference : [wonwoo blog](http://wonwoo.ml/index.php/post/951 "wonwoo blog")
 
 
 
