@@ -24,8 +24,6 @@ import java.net.UnknownHostException;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-import static com.sun.tools.doclint.Entity.ge;
-
 /**
  * @author wonwoo
  */
