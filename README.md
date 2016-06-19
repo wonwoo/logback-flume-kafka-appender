@@ -2,7 +2,7 @@
 
 ## setting
 
-### kafka 9.0.1.0
+### kafka 0.9.0.1
 [download kafka](http://kafka.apache.org/downloads.html "download kafka")
 
 #### start kafka
