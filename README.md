@@ -58,7 +58,7 @@ bin/kafka-console-consumer.sh --zookeeper localhost:2181 --topic test
 </encoder>
 ```
 
-result 
+kakfa consumer 
 
 ```
 21:17:49.959 [main] ERROR m.w.appender.FlumeKafkaAppenderTest - url formed exception java.net.MalformedURLException: no protocol: asdfsadfas
@@ -86,7 +86,7 @@ result
 incloude list 
 includeLevel, includeThreadName, includeMDC, includeLoggerName, includeFormattedMessage, includeMessage ,includeException, includeContextName, includeHostName, includeLineNumber
 
-result 
+kakfa consumer 
 ```
 {
   "timestamp" : "1466337714117",
