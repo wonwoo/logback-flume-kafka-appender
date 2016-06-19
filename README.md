@@ -124,6 +124,25 @@ public void appenderKafkaError() {
 }
 ```
 
+### web application listener
+- maven
+```xml
+<dependency>
+    <groupId>org.logback-extensions</groupId>
+    <artifactId>logback-ext-spring</artifactId>
+    <version>0.1.4</version>
+</dependency>
+```
+
+- web.xml
+```xml
+<listener>
+    <listener-class>ch.qos.logback.ext.spring.web.LogbackConfigListener</listener-class>
+</listener>
+```
+
+
+
 ### maven
 
 ```xml
