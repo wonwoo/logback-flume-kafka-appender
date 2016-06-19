@@ -25,19 +25,20 @@
             <!--<brokerList>localhost:9092,localhost:9093,localhost:9094</brokerList>-->
             <batchSize>100</batchSize>
         </KafkaAttr>
-        <!--<encoder class="me.wonwoo.encoding.DefaultFlumeMessageEncoder">-->
-            <!--<layout class="ch.qos.logback.classic.PatternLayout">-->
-                <!--<pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg</pattern>-->
-            <!--</layout>-->
-        <!--</encoder>-->
-
         <encoder class="me.wonwoo.encoding.DefaultFlumeMessageEncoder">
-            <layout class="me.wonwoo.layout.JsonLayout">
-                <jsonFormatter class="me.wonwoo.layout.JacksonJsonFormatter">
-                    <prettyPrint>true</prettyPrint>
-                </jsonFormatter>
+            <layout class="ch.qos.logback.classic.PatternLayout">
+                <pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg</pattern>
             </layout>
         </encoder>
+
+        <!--<encoder class="me.wonwoo.encoding.DefaultFlumeMessageEncoder">-->
+            <!--<layout class="me.wonwoo.layout.JsonLayout">-->
+                <!--<jsonFormatter class="me.wonwoo.layout.JacksonJsonFormatter">-->
+                    <!--<prettyPrint>true</prettyPrint>-->
+                <!--</jsonFormatter>-->
+                <!--<includeContextName>false</includeContextName>-->
+            <!--</layout>-->
+        <!--</encoder>-->
 
     </appender>
     <root level="INFO">

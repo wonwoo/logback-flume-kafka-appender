@@ -15,11 +15,16 @@ package me.wonwoo.layout;
 import ch.qos.logback.classic.Level;
 import ch.qos.logback.classic.pattern.ThrowableHandlingConverter;
 import ch.qos.logback.classic.pattern.ThrowableProxyConverter;
+import ch.qos.logback.classic.spi.CallerData;
 import ch.qos.logback.classic.spi.ILoggingEvent;
 import ch.qos.logback.classic.spi.IThrowableProxy;
 
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 import java.util.LinkedHashMap;
 import java.util.Map;
+
+import static com.sun.tools.doclint.Entity.ge;
 
 /**
  * @author wonwoo
@@ -35,6 +40,8 @@ public class JsonLayout extends JsonLayoutBase<ILoggingEvent> {
   public static final String MESSAGE_ATTR_NAME = "raw-message";
   public static final String EXCEPTION_ATTR_NAME = "exception";
   public static final String CONTEXT_ATTR_NAME = "context";
+  public static final String LINE_NUMBER = "lineNumber";
+  public static final String HOST_NAME = "hostName";
 
   protected boolean includeLevel;
   protected boolean includeThreadName;
@@ -44,6 +51,9 @@ public class JsonLayout extends JsonLayoutBase<ILoggingEvent> {
   protected boolean includeMessage;
   protected boolean includeException;
   protected boolean includeContextName;
+  protected boolean includeHostName;
+  protected boolean includeLineNumber;
+  private String hostName;
 
   private ThrowableHandlingConverter throwableProxyConverter;
 
@@ -56,6 +66,13 @@ public class JsonLayout extends JsonLayoutBase<ILoggingEvent> {
     this.includeFormattedMessage = true;
     this.includeException = true;
     this.includeContextName = true;
+    this.includeLineNumber = true;
+    this.includeHostName = true;
+    try {
+      this.hostName = InetAddress.getLocalHost().getHostName();
+    } catch (UnknownHostException ignored) {
+    }
+
     this.throwableProxyConverter = new ThrowableProxyConverter();
   }
 
@@ -134,6 +151,21 @@ public class JsonLayout extends JsonLayoutBase<ILoggingEvent> {
       }
     }
 
+    if (this.includeLineNumber) {
+      String number = lineNumber(event);
+      map.put(LINE_NUMBER, number);
+    }
+
+    if (this.includeHostName) {
+      try {
+        if(this.hostName == null){
+          this.hostName = InetAddress.getLocalHost().getHostName();
+        }
+        map.put(HOST_NAME, this.hostName);
+      } catch (UnknownHostException ignored) {
+      }
+    }
+
     if (this.includeException) {
       IThrowableProxy throwableProxy = event.getThrowableProxy();
       if (throwableProxy != null) {
@@ -148,13 +180,28 @@ public class JsonLayout extends JsonLayoutBase<ILoggingEvent> {
     return map;
   }
 
+
+  /**
+   * line number
+   * @param le
+   * @return
+   */
+  private String lineNumber(ILoggingEvent le) {
+    StackTraceElement[] cda = le.getCallerData();
+    if (cda != null && cda.length > 0) {
+      return Integer.toString(cda[0].getLineNumber());
+    } else {
+      return CallerData.NA;
+    }
+  }
+
   /**
    * Override to add custom data to the produced JSON from the logging event.
    * Useful if you e.g. want to include the parameter array as a separate json attribute.
    *
-   * @param map the map for JSON serialization, populated with data corresponding to the
-   *            configured attributes. Add new entries from the event to this map to have
-   *            them included in the produced JSON.
+   * @param map   the map for JSON serialization, populated with data corresponding to the
+   *              configured attributes. Add new entries from the event to this map to have
+   *              them included in the produced JSON.
    * @param event the logging event to extract data from.
    */
   protected void addCustomDataToJsonMap(Map<String, Object> map, ILoggingEvent event) {
@@ -232,4 +279,13 @@ public class JsonLayout extends JsonLayoutBase<ILoggingEvent> {
   public void setThrowableProxyConverter(ThrowableHandlingConverter throwableProxyConverter) {
     this.throwableProxyConverter = throwableProxyConverter;
   }
+
+  public void setIncludeLineNumber(boolean includeLineNumber) {
+    this.includeLineNumber = includeLineNumber;
+  }
+
+  public boolean getIncludeLineNumber() {
+    return this.includeLineNumber;
+  }
+
 }

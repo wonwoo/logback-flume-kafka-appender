@@ -26,7 +26,7 @@ public class FlumeKafkaAppenderTest {
       URL uri = new URL("asdfsadfas");
       uri.openConnection();
     } catch (MalformedURLException e) {
-      logger.error("error : ", e);
+      logger.error("url formed exception ", e);
     } catch (IOException e) {
 //      logger.error("error : ", e);
       logger.error("error {} : ", e.toString());
