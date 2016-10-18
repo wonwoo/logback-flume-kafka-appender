@@ -2,6 +2,8 @@ package me.wonwoo.appender;
 
 import ch.qos.logback.core.UnsynchronizedAppenderBase;
 import me.wonwoo.encoding.FlumeMessageEncoder;
+import me.wonwoo.flume.exception.FlumeInitializeException;
+import me.wonwoo.flume.exception.LogBackAppenderException;
 import me.wonwoo.flume.sink.FlumeSink;
 import org.apache.flume.Event;
 import org.apache.flume.event.EventBuilder;
@@ -38,6 +40,7 @@ public abstract class FlumeAppenderBase<E> extends UnsynchronizedAppenderBase<E>
     } catch (Exception ex) {
       addError("rpc client error ", ex);
       this.stop();
+      throw new LogBackAppenderException("logback appender error ", ex);
     }
   }
 
@@ -90,12 +93,13 @@ public abstract class FlumeAppenderBase<E> extends UnsynchronizedAppenderBase<E>
     }
 
     private FlumeSink initialize() {
-      FlumeSink flumeSink = null;
+      FlumeSink flumeSink;
       try {
         flumeSink = createSink();
         flumeSink.start();
       } catch (Exception e) {
         addError("create error ", e);
+        throw new FlumeInitializeException("flume sink initialize error  ", e);
       }
       return flumeSink;
     }

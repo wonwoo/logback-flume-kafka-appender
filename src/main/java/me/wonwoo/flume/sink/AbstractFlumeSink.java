@@ -1,5 +1,6 @@
 package me.wonwoo.flume.sink;
 
+import me.wonwoo.flume.exception.FlumeSinkTransactionException;
 import org.apache.flume.Channel;
 import org.apache.flume.Event;
 import org.apache.flume.Sink;
@@ -21,11 +22,17 @@ public abstract class AbstractFlumeSink implements FlumeSink {
   public void processEvents(List<Event> events) throws Exception {
     Transaction txn = channel.getTransaction();
     txn.begin();
-    for (Event event : events) {
-      channel.put(event);
+    try {
+      for (Event event : events) {
+        channel.put(event);
+      }
+      txn.commit();
+    }catch (Throwable e){
+      txn.rollback();
+      throw new FlumeSinkTransactionException("flume transaction error ", e);
+    }finally {
+      txn.close();
     }
-    txn.commit();
-    txn.close();
     sink.process();
   }
 
